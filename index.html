@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .music-player {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .song-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .control-btn {
+            background-color: #444;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .control-btn:hover {
+            background-color: #555;
+        }
+        #seek-bar {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="music-player">
+        <h2>Now Playing</h2>
+        <p class="song-title">Song Title</p>
+        <audio id="audio-player" audio/LoveYourSelf.mp3"></audio>
+        <div class="controls">
+            <button id="prev" class="control-btn">⏮</button>
+            <button id="play-pause" class="control-btn">▶️</button>
+            <button id="next" class="control-btn">⏭</button>
+        </div>
+        <input type="range" id="seek-bar" value="0">
+    </div>
+    <script>
+        const audioPlayer = document.getElementById("audio-player");
+        const playPauseBtn = document.getElementById("play-pause");
+        const seekBar = document.getElementById("seek-bar");
+
+        let isPlaying = false;
+
+        playPauseBtn.addEventListener("click", () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.textContent = "▶️";
+            } else {
+                audioPlayer.play();
+                playPauseBtn.textContent = "⏸️";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        audioPlayer.addEventListener("timeupdate", () => {
+            seekBar.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        });
+
+        seekBar.addEventListener("input", () => {
+            audioPlayer.currentTime = (seekBar.value / 100) * audioPlayer.duration;
+        });
+    </script>
+</body>
+</html>
